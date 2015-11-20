@@ -55,6 +55,43 @@ dynamodb.batchGetItem(params, function(err, data) {
 */
     }
 });
+
+var table = new AWS.DynamoDB();
+var key = 'ret';
+
+var params = {
+  Item: { /* required */
+    Pages: { 
+      S: key
+    },
+    PageTitle:{
+      S:'hello'
+    },
+    email:{
+      S:'myname@mydomain'
+    }
+  },
+  TableName: 'Futexlive-Landing-Pages',
+  ReturnConsumedCapacity: 'TOTAL',
+  ReturnItemCollectionMetrics: 'SIZE'
+};
+
+var tableparams = {TableName: 'Futexlive-Landing-Pages'};
+
+table.describeTable(tableparams, function(err, data) {
+  if (err) {console.log("describe failed");console.log(err, err.stack);} 
+  else     {console.log("describe success");console.log(JSON.stringify(data));}          
+})
+
+
+// Write the item to the table"
+
+table.putItem(params, function(err, data) {
+  if (err) {console.log("put failed");console.log(err, err.stack);} // an error occurred
+  else     {console.log("put success");console.log(data);}         // successful response
+});
+
+
 </script>
 </head>
 <body>
